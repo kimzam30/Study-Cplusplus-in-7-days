@@ -21,7 +21,8 @@ public:
     void push(int value) {
         Node* newNode = new Node(value);
         // TODO 1: Make newNode point to the current top, then update top to be newNode.
-        
+        newNode->next = top;
+        top = newNode;
     }
 
     void pop() {
@@ -33,7 +34,10 @@ public:
         // Print the data being popped.
         // Move 'top' to top->next. 
         // Delete the temp pointer.
-        
+        Node* temp = top;
+        cout << "Popped: " << temp->data << endl;
+        top = top->next;
+        delete temp;
     }
 
     void display() {
@@ -62,11 +66,15 @@ public:
         Node* newNode = new Node(value);
         // TODO 3: If the queue is completely empty (front is nullptr),
         // set both front and rear to newNode, then return.
-        
+        if (front == nullptr) {
+            front = rear = newNode;
+            return;
+        }
         
         // If not empty, attach newNode behind the current rear, 
         // then update rear to be the newNode.
-        
+        rear->next = newNode;
+        rear = newNode;
     }
 
     void dequeue() {
@@ -79,7 +87,13 @@ public:
         // Move 'front' to front->next.
         // If 'front' is now nullptr (meaning the queue is now empty), set 'rear' to nullptr as well.
         // Delete the temp pointer.
-        
+        Node* temp = front;
+        cout << "Dequeued: " << temp->data << endl;
+        front = front->next;
+        if (front == nullptr) {
+            rear = nullptr;
+        }
+        delete temp;
     }
 
     void display() {
